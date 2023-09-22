@@ -1,0 +1,105 @@
+@mixin btn($left, $top) {
+  width: 30px;
+  height: 30px;
+  transition-duration: 0.5s;
+  position: relative;
+}
+
+@mixin size {
+  height: 4px; // 8
+  width: 15px; // 30
+}
+@mixin icon {
+  transition-duration: 0.5s;
+  position: absolute;
+  @include size;
+  top: 10px; //30
+  background-color: #fff;
+}
+
+@mixin icon-before {
+  transition-duration: 0.5s;
+  position: absolute;
+  @include size;
+  top: -10px; //-20
+  background-color: #fff;
+  content: '';
+}
+
+@mixin icon-after {
+  transition-duration: 0.5s;
+  position: absolute;
+  @include size;
+  top: 10px; //20
+  background-color: #fff;
+  content: '';
+}
+
+.burger {
+  @include btn(0px, 100px);
+
+  .icon-left {
+    @include icon;
+    left: 0px;
+
+    &:before {
+      @include icon-before;
+    }
+
+    &:after {
+      @include icon-after;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .icon-right {
+    @include icon;
+    left: 14px; // 30
+
+    &:before {
+      @include icon-before;
+    }
+
+    &:after {
+      @include icon-after;
+    }
+  }
+
+  &--active {
+    .icon-left {
+      transition-duration: 0.5s;
+      background: transparent;
+
+      &:before {
+        transform: rotateZ(45deg) scaleX(1.4) translate(4px, 4px);
+      }
+
+      &:after {
+        top: 15px; //20
+        transform: rotateZ(-45deg) scaleX(1.4) translate(4px, -4px);
+      }
+    }
+
+    .icon-right {
+      transition-duration: 0.5s;
+      background: transparent;
+      left: 15px;
+
+      &:before {
+        top: -11px;
+        transform: rotateZ(-45deg) scaleX(1.4) translate(-4px, 4px);
+      }
+
+      &:after {
+        top: 16px; //20
+        transform: rotateZ(45deg) scaleX(1.4) translate(-4px, -4px);
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
+  }
+}
