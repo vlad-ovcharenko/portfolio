@@ -7,10 +7,9 @@
   >
     <Slide v-for="slide in props.data" :key="slide">
       <div class="carousel__item">
-        <a :href="slide.link" target="_blank" class="carousel__button">
-          <img class="carousel__img" :src="slide.images[0]" alt="" />
-        </a>
+        <img class="carousel__img" :src="slide.images[0]" alt="" />
         <p>{{ slide.title }}</p>
+        <a :href="slide.link" target="_blank" href="">See the site</a>
       </div>
     </Slide>
 
@@ -67,19 +66,24 @@ const breakpoints = {
     p {
       font-size: 20px;
     }
+    a {
+      border-radius: 20px;
+      border: solid 1px white;
+      padding: 10px 30px;
+      align-self: center;
+      transition: all 0.3s;
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
   }
-  &__button {
+  &__img {
     aspect-ratio: 1/1;
-    width: 100%;
     border-radius: 20px;
     padding: 0;
     margin: 0;
     background-color: transparent;
-    img {
-      border-radius: 20px;
-      max-width: 100%;
-      max-height: 100%;
-    }
+    width: 100%;
   }
   &__prev,
   &__next {

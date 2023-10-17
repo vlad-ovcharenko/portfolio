@@ -4,7 +4,7 @@
       <div class="hi__text">
         <p class="hi__greet">Hi! My name is</p>
         <p class="hi__name">Vlad Ovcharenko</p>
-        <p class="hi__position">Vue.js Frontend Engineer in Canada <span>🇨🇦</span></p>
+        <p class="hi__position">Fullstack Engineer in <span>🇨🇦</span></p>
       </div>
       <img class="hi__img" src="../assets/images/me.png" alt="me" />
     </div>

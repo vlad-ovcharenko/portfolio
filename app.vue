@@ -9,8 +9,6 @@ import HiSection from '@/components/HiSection.vue'
 const hiRef = ref<HTMLDivElement>()
 const aboutRef = ref<HTMLDivElement>()
 const projectsRef = ref<HTMLDivElement>()
-// @ts-ignore
-const sectionsRefs: Ref<HTMLDivElement>[] = [hiRef, aboutRef, projectsRef]
 
 const links = [
   { href: '#hi', title: 'Hi!' },
@@ -51,65 +49,18 @@ onMounted(() => {
     const hash = getHash(ev.newURL)
     if (hash) state.currentHash = hash
   }
-
-  let isScrolling: ReturnType<typeof setTimeout> | null = null
-  function setHash() {
-    const body = document.body
-    const html = document.documentElement
-
-    const pageHeight = Math.max(
-        body.scrollHeight,
-        body.offsetHeight,
-        html.clientHeight,
-        html.scrollHeight,
-        html.offsetHeight
-    )
-
-    for (const i in sectionsRefs) {
-      const el = sectionsRefs[i].value
-      if (!el) return
-      for (const { value } of sectionsRefs) if (!value) return
-      const offsetBottom = el.offsetTop + el.offsetHeight
-
-      if (pageHeight === scrollY + window.innerHeight) {
-        const item = sectionsRefs[sectionsRefs.length - 1]
-        if (item !== undefined) {
-          const name = item.value.id
-          history.pushState(null, '', '#' + name)
-          state.currentHash = '#' + name
-          return
-        }
-      }
-      if (window.scrollY === 0) {
-        const name = sectionsRefs[0].value.id
-        history.pushState(null, '', '#' + name)
-        state.currentHash = '#' + name
-        return
-      }
-      if (window.scrollY > el.offsetTop && window.scrollY < offsetBottom) {
-        history.pushState(null, '', '#' + el.id)
-        state.currentHash = '#' + el.id
-        return
-      }
-    }
-  }
-
-  document.addEventListener('scroll', () => {
-    if (isScrolling) window.clearTimeout(isScrolling)
-    isScrolling = setTimeout(setHash, 200)
-  })
 })
 </script>
 
 <template>
   <header class="header" :class="{ 'header--open': state.isMenu }">
     <div class="header__container">
-      <a
-          class="resume-button"
-          target="_blank"
-          href="https://docs.google.com/document/d/1umiW5NyW1V49OLZlpLxVyvhPe8zJuIncY1_4em4sG-8/edit?usp=sharing"
-      >Resume</a
-      >
+<!--      <a-->
+<!--          class="resume-button"-->
+<!--          target="_blank"-->
+<!--          href="https://docs.google.com/document/d/1Ux7Z3iGztb97qKfgvgafd5gU0KCDV92R/edit?usp=sharing&ouid=102436642318526567624&rtpof=true&sd=true"-->
+<!--      >Resume</a-->
+<!--      >-->
       <div
           class="burger header__burger"
           :class="{ 'burger--active': state.isMenu }"
@@ -137,9 +88,13 @@ onMounted(() => {
 
   <div class="projects" ref="projectsRef" id="projects">
     <p class="projects__title">Completed Projects</p>
-    <p class="projects__hint">click an image to see details</p>
     <ProjectsCarousel :data="projects" />
   </div>
+
+  <section class="soon">
+    New Functionality coming soon ✨
+    <p>and some bug fixing 🐞</p>
+  </section>
 </template>
 
 <style lang="scss">
@@ -272,17 +227,29 @@ body {
     max-width: $max-width + 30px;
     padding: 0 15px;
     font-size: 60px;
-    margin: 0 auto;
-  }
-  &__hint {
-    max-width: $max-width + 30px;
-    padding: 0 15px;
-    font-size: 20px;
-    margin: 10px auto 40px;
+    margin: 0 auto 20px;
   }
   @media screen and (max-width: $mobile) {
     &__title {
       font-size: 40px;
+    }
+  }
+}
+.soon {
+  padding: 0 20px;
+  margin: 40px auto;
+  font-size: 50px;
+  text-align: center;
+  max-width: 800px;
+  p {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 20px;
+  }
+  @media screen and (max-width: $tablet) {
+    font-size: 30px;
+    p {
+      font-size: 10px;
     }
   }
 }
